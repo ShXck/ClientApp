@@ -24,7 +24,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         menu = (ListView)findViewById(R.id.main_menu);
 
-        String[] menu_options = {"Book Appointment", "Cancel Appointment", "Pay", "Rate our service"};
+        String[] menu_options = {"Reservar cita", "Cancelar cita", "Pagar", "Califica nuestro servicio"};
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, menu_options);
 
         menu.setAdapter(adapter);
@@ -39,6 +39,8 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0){
                     get_appointment_booking_activity();
+                }else if(position == 1){
+                    get_cancel_appointment_screen();
                 }
             }
         });
@@ -47,5 +49,10 @@ public class MainMenuActivity extends AppCompatActivity {
     private void get_appointment_booking_activity(){
         Intent book = new Intent(this, BookAppointmentActivity.class);
         startActivity(book);
+    }
+
+    private void get_cancel_appointment_screen(){
+        Intent cancel = new Intent(this, CancelAppointmentActivity.class);
+        startActivity(cancel);
     }
 }

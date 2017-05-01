@@ -33,4 +33,14 @@ public class JSONHandler {
         }
         return json_date.toString();
     }
+
+    public static String delete_appointment(String medic_code){
+        JSONObject json_cancel = new JSONObject();
+        try {
+            json_cancel.put("code", medic_code);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json_cancel.toString();
+    }
 }
