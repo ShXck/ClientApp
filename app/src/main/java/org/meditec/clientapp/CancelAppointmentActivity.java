@@ -5,8 +5,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -18,17 +22,26 @@ public class CancelAppointmentActivity extends AppCompatActivity {
 
     private TextView appointment_code;
     private TextView appointment_date;
-    private TextView symptoms_text;
     private Button cancel_button;
+    private ListView details_menu;
+    private ListAdapter adapter;
+
+    private String symptoms;
+    private String tests;
+    private String cases;
+    private String medication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cancel_appointment);
 
+        String[] options = {"Síntomas","Exámenes", "Medicación" , "Casos clínicos"};
+        details_menu = (ListView)findViewById(R.id.details_menu);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,options);
+        details_menu.setAdapter(adapter);
         appointment_code = (TextView)findViewById(R.id.appointment_code);
         appointment_date = (TextView)findViewById(R.id.appointment_date);
-        symptoms_text = (TextView)findViewById(R.id.symptoms_text);
         cancel_button = (Button)findViewById(R.id.cancel_button);
 
         get_appointment_info();
@@ -37,6 +50,17 @@ public class CancelAppointmentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 show_dialog();
+            }
+        });
+
+        get_details();
+    }
+
+    private void get_details() {
+        details_menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                show_detail_dialog((String)parent.getItemAtPosition(position));
             }
         });
     }
@@ -62,6 +86,35 @@ public class CancelAppointmentActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    private void show_detail_dialog(String option){
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+        dialog.setTitle(option);
+        switch (option){
+            case "Síntomas":
+                dialog.setMessage(symptoms);
+                break;
+            case "Exámenes":
+                dialog.setMessage(tests);
+                break;
+            case "Medicación":
+                dialog.setMessage(medication);
+                break;
+            case "Casos clínicos":
+
+                dialog.setMessage(cases);
+                break;
+        }
+        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
     private void remove_appointment() {
         RequestManager.DELETE(LoginActivity.client_name + "/appointments", JSONHandler.delete_appointment(BookAppointmentActivity.code_picked));
     }
@@ -78,7 +131,11 @@ public class CancelAppointmentActivity extends AppCompatActivity {
 
             appointment_code.setText("Código de cita: " + appointment.getString("code"));
             appointment_date.setText("Fecha: " + appointment.getString("date"));
-            symptoms_text.setText("Síntomas: " + appointment.getString("symptoms"));
+            symptoms = "Síntomas: " + appointment.getString("symptoms");
+            tests = "Exámenes: " + appointment.getString("tests");
+            medication = "Medicación: " + appointment.getString("medication");
+            cases = "Casos clínicos: " + appointment.getString("cases");
+
         }catch (JSONException x){
             x.printStackTrace();
         }

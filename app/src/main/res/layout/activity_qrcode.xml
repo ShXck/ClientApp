@@ -11,7 +11,7 @@
     tools:context="org.meditec.clientapp.auth.QRCodeActivity">
 
     <TextView
-        android:text="We've sent you a QR Code that you must scan in order to use the Client's App. Check your e-mail and insert the QR Code here."
+        android:text="Te hemos enviado un código QR a tu correo, por favor escanealo para desbloquear tu aplicación"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -22,30 +22,13 @@
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:text="Send email"
+        android:text="Escanear código"
         android:fontFamily="casual"
+        android:background="@color/com_facebook_button_login_silver_background_color_pressed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="50dp"
-        android:layout_marginEnd="50dp"
-        android:background="@color/com_facebook_button_login_silver_background_color_pressed"
-        android:id="@+id/email_button"
+        android:id="@+id/scan_button"
         android:layout_below="@+id/instruction"
-        android:layout_toLeftOf="@+id/pick_button"
-        android:layout_toStartOf="@+id/pick_button"
-        android:layout_marginTop="37dp" />
-
-    <Button
-        android:text="SELECT QR CODE"
-        android:fontFamily="casual"
-        android:background="@color/com_facebook_button_login_silver_background_color_pressed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pick_button"
-        android:layout_marginRight="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_alignBaseline="@+id/email_button"
-        android:layout_alignBottom="@+id/email_button"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="56dp" />
 </RelativeLayout>

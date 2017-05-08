@@ -1,12 +1,8 @@
 package org.meditec.clientapp;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,10 +13,13 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.meditec.clientapp.auth.VerificationActivity;
 import org.meditec.clientapp.network.RequestManager;
 import java.util.Arrays;
 public class LoginActivity extends AppCompatActivity {
@@ -52,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 get_user_info(loginResult);
-                get_qr_screen();
+                get_verification_screen();
             }
 
             @Override
@@ -67,9 +66,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void get_qr_screen(){
-        Intent menu = new Intent(this, MainMenuActivity.class);
-        startActivity(menu);
+    private void get_verification_screen(){
+        Intent verification = new Intent(this, VerificationActivity.class);
+        startActivity(verification);
     }
 
     @Override
@@ -99,6 +98,18 @@ public class LoginActivity extends AppCompatActivity {
         parameter.putString("fields", "name, email");
         request.setParameters(parameter);
         request.executeAsync();
+    }
+
+    public static void logout(){
+        if (AccessToken.getCurrentAccessToken() == null){
+            return;
+        }
+        new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions", null, HttpMethod.DELETE, new GraphRequest.Callback() {
+            @Override
+            public void onCompleted(GraphResponse response) {
+                LoginManager.getInstance().logOut();
+            }
+        });
     }
 
 /*    private void printKeyHash() {

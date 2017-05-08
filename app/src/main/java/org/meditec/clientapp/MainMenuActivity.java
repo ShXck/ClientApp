@@ -24,7 +24,8 @@ public class MainMenuActivity extends AppCompatActivity {
 
         menu = (ListView)findViewById(R.id.main_menu);
 
-        String[] menu_options = {"Reservar cita", "Cancelar cita", "Pagar", "Califica nuestro servicio"};
+        //TODO: Agregar una opcion para visualizar los detalles de la cita en cuestión.
+        String[] menu_options = {"Reservar cita", "Ver cita", "Pagar", "Califica nuestro servicio"};
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, menu_options);
 
         menu.setAdapter(adapter);
