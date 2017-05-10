@@ -31,7 +31,9 @@
         <activity android:name=".MainMenuActivity" />
         <activity android:name=".BookAppointmentActivity" />
         <activity android:name=".CancelAppointmentActivity" />
-        <activity android:name=".auth.VerificationActivity"></activity>
+        <activity android:name=".auth.VerificationActivity" />
+        <activity android:name=".PaymentActivity" />
+        <activity android:name=".FeedbackActivity"></activity>
     </application>
 
 </manifest>

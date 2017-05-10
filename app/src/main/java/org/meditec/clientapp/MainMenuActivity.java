@@ -24,7 +24,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
         menu = (ListView)findViewById(R.id.main_menu);
 
-        //TODO: Agregar una opcion para visualizar los detalles de la cita en cuestión.
         String[] menu_options = {"Reservar cita", "Ver cita", "Pagar", "Califica nuestro servicio"};
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, menu_options);
 
@@ -42,6 +41,10 @@ public class MainMenuActivity extends AppCompatActivity {
                     get_appointment_booking_activity();
                 }else if(position == 1){
                     get_cancel_appointment_screen();
+                }else if (position == 2){
+                    get_payment_screen();
+                }else{
+                    get_rating_screen();
                 }
             }
         });
@@ -55,5 +58,15 @@ public class MainMenuActivity extends AppCompatActivity {
     private void get_cancel_appointment_screen(){
         Intent cancel = new Intent(this, CancelAppointmentActivity.class);
         startActivity(cancel);
+    }
+
+    private void get_payment_screen(){
+        Intent payment = new Intent(this, PaymentActivity.class);
+        startActivity(payment);
+    }
+
+    private void get_rating_screen(){
+        Intent rating = new Intent(this, FeedbackActivity.class);
+        startActivity(rating);
     }
 }

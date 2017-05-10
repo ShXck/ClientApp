@@ -43,4 +43,16 @@ public class JSONHandler {
         }
         return json_cancel.toString();
     }
+
+    public static String build_json_comments(String comments,  String code){
+        JSONObject json_comments = new JSONObject();
+
+        try{
+            json_comments.put("comments",comments);
+            json_comments.put("code",code);
+        }catch (JSONException j){
+            j.printStackTrace();
+        }
+        return json_comments.toString();
+    }
 }
