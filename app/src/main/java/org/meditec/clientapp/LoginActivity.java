@@ -100,18 +100,6 @@ public class LoginActivity extends AppCompatActivity {
         request.executeAsync();
     }
 
-    public static void logout(){
-        if (AccessToken.getCurrentAccessToken() == null){
-            return;
-        }
-        new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions", null, HttpMethod.DELETE, new GraphRequest.Callback() {
-            @Override
-            public void onCompleted(GraphResponse response) {
-                LoginManager.getInstance().logOut();
-            }
-        });
-    }
-
 /*    private void printKeyHash() {
         // Add code to print out the key hash
         try {

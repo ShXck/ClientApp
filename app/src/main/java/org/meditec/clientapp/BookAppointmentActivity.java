@@ -1,6 +1,7 @@
 package org.meditec.clientapp;
 
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
 
     private ListView menu;
     private ListAdapter adapter;
+    //TODO:NO usar arrays meterlos en el adapter
     private ArrayList<String> codes = new ArrayList<>();
 
     public static String code_picked;
@@ -43,7 +45,8 @@ public class BookAppointmentActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 code_picked = (String)parent.getItemAtPosition(position);
-                get_date_picker();
+                //get_date_picker();
+                get_record_activity();
             }
         });
     }
@@ -51,6 +54,11 @@ public class BookAppointmentActivity extends AppCompatActivity {
     private void get_date_picker() {
         DialogFragment date_picker = new DatePickerFragment();
         date_picker.show(getFragmentManager(),"Date Picker");
+    }
+
+    private void get_record_activity(){
+        Intent record = new Intent(BookAppointmentActivity.this, SymptomsRegisterActivity.class);
+        startActivity(record);
     }
 
     private void get_medic_codes(){

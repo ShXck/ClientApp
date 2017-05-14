@@ -1,24 +1,16 @@
 package org.meditec.clientapp.network;
 
+import android.util.Log;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+
 public class JSONHandler {
 
-    public static String get_json_patient_info(String name, String email){
-
-        JSONObject json_patient = new JSONObject();
-
-        try {
-            json_patient.put("name",name);
-            json_patient.put("email",email);
-        }catch (JSONException j){
-            j.printStackTrace();
-        }
-        return json_patient.toString();
-    }
-
-    public static String get_json_date(int year, int month, int day, String med_code, String patient_name){
+    public static String build_json_appointment_info(int year, int month, int day, String med_code, String patient_name, String recorded_symptoms){
 
         JSONObject json_date = new JSONObject();
 
@@ -28,6 +20,7 @@ public class JSONHandler {
             json_date.put("day", day);
             json_date.put("code", med_code);
             json_date.put("patient", patient_name);
+            json_date.put("recorded", build_json_recorded_symptoms(recorded_symptoms));
         }catch (JSONException e){
             e.printStackTrace();
         }
@@ -54,5 +47,19 @@ public class JSONHandler {
             j.printStackTrace();
         }
         return json_comments.toString();
+    }
+
+    private static JSONArray build_json_recorded_symptoms(String symptoms){
+
+        JSONArray array = new JSONArray();
+
+        String[] result = symptoms.split(",");
+
+        for (String s: result){
+            array.put(s);
+        }
+
+        Log.i("RESULT", array.toString());
+        return array;
     }
 }

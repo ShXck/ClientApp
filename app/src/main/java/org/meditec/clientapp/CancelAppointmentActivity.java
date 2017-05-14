@@ -103,7 +103,6 @@ public class CancelAppointmentActivity extends AppCompatActivity {
                 dialog.setMessage(medication);
                 break;
             case "Casos clínicos":
-
                 dialog.setMessage(cases);
                 break;
         }
