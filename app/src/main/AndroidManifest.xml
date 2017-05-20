@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/GreenLightMaterial">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,7 +34,8 @@
         <activity android:name=".auth.VerificationActivity" />
         <activity android:name=".PaymentActivity" />
         <activity android:name=".FeedbackActivity" />
-        <activity android:name=".SymptomsRegisterActivity"></activity>
+        <activity android:name=".SymptomsRegisterActivity" />
+        <activity android:name=".LoginActivity"></activity>
     </application>
 
 </manifest>

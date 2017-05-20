@@ -4,12 +4,14 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.meditec.clientapp.network.RequestManager;
@@ -19,9 +21,7 @@ import java.util.ArrayList;
 public class BookAppointmentActivity extends AppCompatActivity {
 
     private ListView menu;
-    private ListAdapter adapter;
-    //TODO:NO usar arrays meterlos en el adapter
-    private ArrayList<String> codes = new ArrayList<>();
+    private ArrayAdapter adapter;
 
     public static String code_picked;
 
@@ -30,13 +30,11 @@ public class BookAppointmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_appointment);
 
-        get_medic_codes();
-
         menu = (ListView)findViewById(R.id.medics_list);
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, codes);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         menu.setAdapter(adapter);
-
+        get_medic_codes();
         get_code_picked();
     }
 
@@ -45,15 +43,9 @@ public class BookAppointmentActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 code_picked = (String)parent.getItemAtPosition(position);
-                //get_date_picker();
                 get_record_activity();
             }
         });
-    }
-
-    private void get_date_picker() {
-        DialogFragment date_picker = new DatePickerFragment();
-        date_picker.show(getFragmentManager(),"Date Picker");
     }
 
     private void get_record_activity(){
@@ -70,10 +62,11 @@ public class BookAppointmentActivity extends AppCompatActivity {
     private void process_list(String list){
         try {
             JSONObject json = new JSONObject(list);
+            JSONArray array = json.getJSONArray("medics");
 
-            for (int i = 1; i < json.getInt("count"); i++){
+            for (int i = 0; i < array.length(); i++){
                 try {
-                    codes.add(json.getString(String.valueOf(i)));
+                    adapter.add(array.get(i));
                 }catch (JSONException j){
                     break;
                 }

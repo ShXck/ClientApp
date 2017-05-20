@@ -48,6 +48,7 @@ public class QRCodeActivity extends AppCompatActivity {
 
     private void get_main_screen(){
         Intent menu = new Intent(this, MainMenuActivity.class);
+        menu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(menu);
     }
 

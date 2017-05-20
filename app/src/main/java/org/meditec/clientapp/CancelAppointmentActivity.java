@@ -31,6 +31,7 @@ public class CancelAppointmentActivity extends AppCompatActivity {
     private String tests;
     private String cases;
     private String medication;
+    private boolean can_cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,11 @@ public class CancelAppointmentActivity extends AppCompatActivity {
         cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                show_dialog();
+                if (!can_cancel){
+                    show_dialog();
+                }else {
+                    invalid_dialog();
+                }
             }
         });
 
@@ -79,6 +84,21 @@ public class CancelAppointmentActivity extends AppCompatActivity {
             }
         });
         dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    private void invalid_dialog(){
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+        dialog.setTitle("Acción inválida");
+        dialog.setMessage("Tu cita ha terminado, no puedes cancelarla ahora");
+        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -124,7 +144,7 @@ public class CancelAppointmentActivity extends AppCompatActivity {
 
     private void get_appointment_info() {
         RequestManager.GET(LoginActivity.client_name + "/appointments");
-        RequestManager.wait_for_response(500);
+        RequestManager.wait_for_response(1000);
         process_appointment(RequestManager.GET_REQUEST_DATA());
     }
 
@@ -138,6 +158,7 @@ public class CancelAppointmentActivity extends AppCompatActivity {
             tests = "Exámenes: " + appointment.getString("tests");
             medication = "Medicación: " + appointment.getString("medication");
             cases = "Casos clínicos: " + appointment.getString("cases");
+            can_cancel = appointment.getBoolean("finished");
 
         }catch (JSONException x){
             x.printStackTrace();

@@ -107,9 +107,6 @@ public class SymptomsRegisterActivity extends AppCompatActivity {
     }
 
     private void add_symptom(String recorded_text){
-
-        Log.i("recorded", recorded_text);
-
         recorded += recorded_text + ",";
         adapter.add(recorded_text);
         adapter.notifyDataSetChanged();

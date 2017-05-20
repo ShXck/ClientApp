@@ -45,6 +45,7 @@ public class PaymentActivity extends AppCompatActivity {
                     RequestManager.DELETE(LoginActivity.client_name + "/pay", "");
 
                     Intent menu = new Intent(PaymentActivity.this, MainMenuActivity.class);
+                    menu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(menu);
                 }else {
                     show_dialog();
@@ -70,7 +71,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     private void get_apppointment_info() {
         RequestManager.GET(LoginActivity.client_name + "/appointments");
-        RequestManager.wait_for_response(500);
+        RequestManager.wait_for_response(1000);
     }
 
     private void process_info(String info){

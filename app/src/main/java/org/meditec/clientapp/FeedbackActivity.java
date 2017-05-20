@@ -1,6 +1,8 @@
 package org.meditec.clientapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +26,7 @@ public class FeedbackActivity extends AppCompatActivity {
     private Button send_button;
 
     private String code;
+    private boolean can_comment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class FeedbackActivity extends AppCompatActivity {
 
     private void get_last_appointment_info() {
         RequestManager.GET(LoginActivity.client_name + "/appointments/last");
-        RequestManager.wait_for_response(500);
+        RequestManager.wait_for_response(1000);
         set_ui(RequestManager.GET_REQUEST_DATA());
     }
 
@@ -51,6 +54,7 @@ public class FeedbackActivity extends AppCompatActivity {
             JSONObject json_data = new JSONObject(data);
             medic_text_view.setText("Médico: " + json_data.getString("medic"));
             code = json_data.getString("medic");
+            can_comment = json_data.getBoolean("finished");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -61,8 +65,12 @@ public class FeedbackActivity extends AppCompatActivity {
         send_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                send_comments();
-                Toast.makeText(getApplicationContext(), "Gracias por colaborar", Toast.LENGTH_SHORT);
+                if (can_comment) {
+                    send_comments();
+                    Toast.makeText(getApplicationContext(), "Gracias por colaborar", Toast.LENGTH_SHORT).show();
+                }else {
+                    show_dialog();
+                }
             }
         });
     }
@@ -70,6 +78,22 @@ public class FeedbackActivity extends AppCompatActivity {
     private void send_comments(){
         RequestManager.POST(LoginActivity.client_name + "/rate", JSONHandler.build_json_comments(comment_section_field.getText().toString(), code));
         Intent menu = new Intent(FeedbackActivity.this, MainMenuActivity.class);
+        menu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(menu);
+    }
+
+    private void show_dialog(){
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+        dialog.setTitle("Acción inválida");
+        dialog.setMessage("Tu cita no ha terminado, puedes pagarla cuando el médico marque tu cita como terminada");
+        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }

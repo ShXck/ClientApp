@@ -45,6 +45,7 @@ public class VerificationActivity extends AppCompatActivity {
                         if (RequestManager.GET_REQUEST_DATA().equals("{status:unblocked}")) {
                             progress_dialog.dismiss();
                             Intent menu = new Intent(VerificationActivity.this, MainMenuActivity.class);
+                            menu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(menu);
                             is_blocked = false;
                         }
@@ -52,6 +53,7 @@ public class VerificationActivity extends AppCompatActivity {
                         if (RequestManager.GET_REQUEST_DATA().equals("{status:blocked}")){
                             progress_dialog.dismiss();
                             Intent scan = new Intent(VerificationActivity.this, QRCodeActivity.class);
+                            scan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(scan);
                             is_blocked = false;
                         }
