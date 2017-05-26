@@ -20,7 +20,7 @@ public class RequestManager {
     public static void POST(String parameter, String data){
 
         String URL =  "http://192.168.1.6:7500/MediTECServer/meditec/patient/" + parameter;
-        //String URL =  "http://172.19.12.235:7500/MediTECServer/meditec/patient/" + parameter;
+        //String URL =  "http://172.19.12.55:7500/MediTECServer/meditec/patient/" + parameter;
 
         try{
             MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -55,7 +55,7 @@ public class RequestManager {
     public static void DELETE(String parameter, String data){
 
         String URL =  "http://192.168.1.6:7500/MediTECServer/meditec/patient/" + parameter;
-        //String URL =  "http://172.19.12.235:7500/MediTECServer/meditec/patient/" + parameter;
+        //String URL =  "http://172.19.12.55:7500/MediTECServer/meditec/patient/" + parameter;
 
         try{
             MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -90,7 +90,7 @@ public class RequestManager {
     public static void GET(String parameter){
 
         String URL =  "http://192.168.1.6:7500/MediTECServer/meditec/patient/" + parameter;
-        //String URL =  "http://172.19.12.235:7500/MediTECServer/meditec/patient/" + parameter;
+        //String URL =  "http://172.19.12.55:7500/MediTECServer/meditec/patient/" + parameter;
 
         Request request = new Request.Builder()
                 .url(URL)
@@ -112,6 +112,47 @@ public class RequestManager {
             }
         });
     }
+
+    /**
+     * Actualiza un recurso en el servidor.
+     * @param parameter el path.
+     * @param data la información actualizada.
+     */
+    public static void PUT(String parameter, String data){
+
+        String URL =  "http://192.168.1.6:7500/MediTECServer/meditec/medics/" + parameter;
+        //String URL =  "http://172.19.12.55:7500/MediTECServer/meditec/medics/" + parameter;
+
+        try{
+            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+            RequestBody body = RequestBody.create(JSON, data);
+            final Request request = new Request.Builder()
+                    .url(URL)
+                    .put(body)
+                    .build();
+
+            Call call = client.newCall(request);
+
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.e("Error", "request ->" + call);
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    SAVE_RESPONSE_DATA(response.body().string());
+                    Log.i("Response", recent_data);
+                }
+            });
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
     private static void SAVE_RESPONSE_DATA(String data){
         recent_data = data;

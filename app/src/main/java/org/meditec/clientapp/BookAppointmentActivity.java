@@ -22,7 +22,6 @@ public class BookAppointmentActivity extends AppCompatActivity {
 
     private ListView menu;
     private ArrayAdapter adapter;
-
     public static String code_picked;
 
     @Override
@@ -38,6 +37,9 @@ public class BookAppointmentActivity extends AppCompatActivity {
         get_code_picked();
     }
 
+    /**
+     * Listener del menú.
+     */
     private void get_code_picked() {
         menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -48,17 +50,27 @@ public class BookAppointmentActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * obtiene la actividad para registrar síntomas.
+     */
     private void get_record_activity(){
         Intent record = new Intent(BookAppointmentActivity.this, SymptomsRegisterActivity.class);
         startActivity(record);
     }
 
+    /**
+     * petición para obtener los códigos de los médicos.
+     */
     private void get_medic_codes(){
         RequestManager.GET("medics_list");
         RequestManager.wait_for_response(1000);
         process_list(RequestManager.GET_REQUEST_DATA());
     }
 
+    /**
+     * procesa el json array con los códigos de médicos.
+     * @param list la lista con los códigos.
+     */
     private void process_list(String list){
         try {
             JSONObject json = new JSONObject(list);

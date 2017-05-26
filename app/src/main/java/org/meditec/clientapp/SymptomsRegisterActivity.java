@@ -51,6 +51,9 @@ public class SymptomsRegisterActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * listeners de botones.
+     */
     private void set_listeners() {
         voice_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +78,12 @@ public class SymptomsRegisterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Maneja el resultado de la grabación.
+     * @param requestCode el código.
+     * @param resultCode el código resultante.
+     * @param data la actividad.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -95,6 +104,9 @@ public class SymptomsRegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Inicia la grabación por voz.
+     */
     private void record(){
         Intent intentActionRecognizeSpeech = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intentActionRecognizeSpeech.putExtra(
@@ -106,6 +118,10 @@ public class SymptomsRegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Añde visualmente los síntomas a una lista.
+     * @param recorded_text el síntoma que se va a agregar.
+     */
     private void add_symptom(String recorded_text){
         recorded += recorded_text + ",";
         adapter.add(recorded_text);

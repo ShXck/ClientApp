@@ -39,16 +39,22 @@ public class FeedbackActivity extends AppCompatActivity {
         comment_section_field = (EditText)findViewById(R.id.comment_section);
 
         get_last_appointment_info();
-
         set_listeners();
     }
 
+    /**
+     * petición para obtener los datos de la última cita que tuvo.
+     */
     private void get_last_appointment_info() {
         RequestManager.GET(LoginActivity.client_name + "/appointments/last");
         RequestManager.wait_for_response(1000);
         set_ui(RequestManager.GET_REQUEST_DATA());
     }
 
+    /**
+     * alista la interfaz con la información de la cita.
+     * @param data la cita en json.
+     */
     private void set_ui(String data){
         try {
             JSONObject json_data = new JSONObject(data);
@@ -60,6 +66,9 @@ public class FeedbackActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * los listeners.
+     */
     private void set_listeners() {
 
         send_button.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +84,9 @@ public class FeedbackActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Petición para agregar comentarios a un médico.
+     */
     private void send_comments(){
         RequestManager.POST(LoginActivity.client_name + "/rate", JSONHandler.build_json_comments(comment_section_field.getText().toString(), code));
         Intent menu = new Intent(FeedbackActivity.this, MainMenuActivity.class);
@@ -82,12 +94,13 @@ public class FeedbackActivity extends AppCompatActivity {
         startActivity(menu);
     }
 
+    /**
+     * Muestra un diálogo cuando se quiere hacer una acción inválida.
+     */
     private void show_dialog(){
-
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-
         dialog.setTitle("Acción inválida");
-        dialog.setMessage("Tu cita no ha terminado, puedes pagarla cuando el médico marque tu cita como terminada");
+        dialog.setMessage("Tu cita no ha terminado, todavía no puedes comentar.");
         dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

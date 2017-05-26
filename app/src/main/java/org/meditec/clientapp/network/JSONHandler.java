@@ -10,6 +10,16 @@ import java.lang.reflect.Array;
 
 public class JSONHandler {
 
+    /**
+     * Construye en json la infromación de la cita reservada.
+     * @param year el año.
+     * @param month el mes.
+     * @param day el día.
+     * @param med_code el código de médico.
+     * @param patient_name el nombre del paciente.
+     * @param recorded_symptoms los síntomas regustrados.
+     * @return un json con la información.
+     */
     public static String build_json_appointment_info(int year, int month, int day, String med_code, String patient_name, String recorded_symptoms){
 
         JSONObject json_date = new JSONObject();
@@ -27,6 +37,11 @@ public class JSONHandler {
         return json_date.toString();
     }
 
+    /**
+     * Construye un json con la información necesaria para eliminar una cita en el servidor.
+     * @param medic_code el código del médico.
+     * @return un json con la información.
+     */
     public static String delete_appointment(String medic_code){
         JSONObject json_cancel = new JSONObject();
         try {
@@ -37,6 +52,12 @@ public class JSONHandler {
         return json_cancel.toString();
     }
 
+    /**
+     * Constuye un json con los comentarios del médico.
+     * @param comments los comentarios.
+     * @param code el código del médico.
+     * @return un json con los comentarios.
+     */
     public static String build_json_comments(String comments,  String code){
         JSONObject json_comments = new JSONObject();
 
@@ -49,6 +70,11 @@ public class JSONHandler {
         return json_comments.toString();
     }
 
+    /**
+     * Constuye un json array con los síntomas que se regustraron por voz.
+     * @param symptoms los síntomas.
+     * @return un array con los síntomas.
+     */
     private static JSONArray build_json_recorded_symptoms(String symptoms){
 
         JSONArray array = new JSONArray();

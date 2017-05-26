@@ -33,6 +33,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Listener del menú.
+     */
     private void get_option_clicked() {
         menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -50,21 +53,33 @@ public class MainMenuActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * obtiene la ventana para reservar.
+     */
     private void get_appointment_booking_activity(){
         Intent book = new Intent(this, BookAppointmentActivity.class);
         startActivity(book);
     }
 
+    /**
+     * obtiene la ventana para ver detalles de cita.
+     */
     private void get_cancel_appointment_screen(){
         Intent cancel = new Intent(this, CancelAppointmentActivity.class);
         startActivity(cancel);
     }
 
+    /**
+     * obtiene la ventana para pagar.
+     */
     private void get_payment_screen(){
         Intent payment = new Intent(this, PaymentActivity.class);
         startActivity(payment);
     }
 
+    /**
+     * obtiene la ventana para comentar a los médicos.
+     */
     private void get_rating_screen(){
         Intent rating = new Intent(this, FeedbackActivity.class);
         startActivity(rating);

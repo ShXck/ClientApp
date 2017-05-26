@@ -45,6 +45,9 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Verifica el resultado del login.
+     */
     private void check_login_status() {
         button.registerCallback(callback_manager, new FacebookCallback<LoginResult>() {
 
@@ -66,16 +69,29 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Obtiene la pantalla donde se verifica el estado de la cuenta.
+     */
     private void get_verification_screen(){
         Intent verification = new Intent(this, VerificationActivity.class);
         startActivity(verification);
     }
 
+    /**
+     * Maneja el resultado del login.
+     * @param requestCode el código.
+     * @param resultCode el código resultante.
+     * @param data la actividad.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callback_manager.onActivityResult(requestCode, resultCode, data);
     }
 
+    /**
+     * Obtiene la información dle usuario a través de la API de facebook.
+     * @param result el resultado del login.
+     */
     private void get_user_info(LoginResult result) {
         AccessToken token = result.getAccessToken();
 

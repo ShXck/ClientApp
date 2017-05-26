@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,13 +38,16 @@ public class PaymentActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Listener del botón para pagar.
+     */
     private void pay() {
         pay_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (can_pay) {
                     RequestManager.DELETE(LoginActivity.client_name + "/pay", "");
-
+                    Toast.makeText(getApplicationContext(), "Cita pagada", Toast.LENGTH_SHORT).show();
                     Intent menu = new Intent(PaymentActivity.this, MainMenuActivity.class);
                     menu.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(menu);
@@ -54,6 +58,9 @@ public class PaymentActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Muestra un mensaje cuando se trate de hacer una acción inválida.
+     */
     private void show_dialog(){
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -69,11 +76,18 @@ public class PaymentActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * petición para obtener los detalles de la cita.
+     */
     private void get_apppointment_info() {
         RequestManager.GET(LoginActivity.client_name + "/appointments");
         RequestManager.wait_for_response(1000);
     }
 
+    /**
+     * Procesa los detalles de la cita.
+     * @param info la cita en json.
+     */
     private void process_info(String info){
         try {
             JSONObject details = new JSONObject(info);

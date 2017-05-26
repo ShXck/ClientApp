@@ -34,6 +34,9 @@ public class VerificationActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Tarea asincrónica que verifica el estado de la cuenta del paciente.
+     */
     private void check_status(){
 
         AsyncTask.execute(new Runnable() {

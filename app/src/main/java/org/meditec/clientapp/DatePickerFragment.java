@@ -27,6 +27,13 @@ public class DatePickerFragment extends DialogFragment implements android.app.Da
         return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
+    /**
+     * Petición para crear una cita en el servidor una vez seleccionada la fecha y el médico.
+     * @param view el calendario.
+     * @param year el año.
+     * @param month el mes.
+     * @param dayOfMonth el día.
+     */
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         RequestManager.POST("book", JSONHandler.build_json_appointment_info(year,month,dayOfMonth, BookAppointmentActivity.code_picked, LoginActivity.client_name, SymptomsRegisterActivity.recorded));

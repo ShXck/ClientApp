@@ -62,6 +62,9 @@ public class CancelAppointmentActivity extends AppCompatActivity {
         get_details();
     }
 
+    /**
+     * listener del menú.
+     */
     private void get_details() {
         details_menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -71,6 +74,9 @@ public class CancelAppointmentActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Muestra una advertencia cuando se oprime el botón de cancelar.
+     */
     private void show_dialog(){
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -92,6 +98,9 @@ public class CancelAppointmentActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Muestra un mensaje cuando se quiere hacer una acción inválida.
+     */
     private void invalid_dialog(){
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -107,6 +116,10 @@ public class CancelAppointmentActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Muestra los detalles seleccionados.
+     * @param option
+     */
     private void show_detail_dialog(String option){
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -135,6 +148,9 @@ public class CancelAppointmentActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * petición para cancelar una cita.
+     */
     private void remove_appointment() {
         RequestManager.DELETE(LoginActivity.client_name + "/appointments", JSONHandler.delete_appointment(BookAppointmentActivity.code_picked));
 
@@ -142,12 +158,19 @@ public class CancelAppointmentActivity extends AppCompatActivity {
         startActivity(menu);
     }
 
+    /**
+     * petición para obtener los detalles de la cita.
+     */
     private void get_appointment_info() {
         RequestManager.GET(LoginActivity.client_name + "/appointments");
         RequestManager.wait_for_response(1000);
         process_appointment(RequestManager.GET_REQUEST_DATA());
     }
 
+    /**
+     * Procesa los detalles de la cita.
+     * @param json_appointment la cita en formato json.
+     */
     private void process_appointment(String json_appointment){
         try {
             JSONObject appointment = new JSONObject(json_appointment);
